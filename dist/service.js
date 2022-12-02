@@ -4,9 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.selectNodeService = exports.dragNodeService = void 0;
-
 var _rxjs = require("rxjs");
-
 var subject1 = new _rxjs.Subject();
 var subject2 = new _rxjs.Subject();
 var dragNodeService = {

@@ -86,7 +86,7 @@ const ChartContainer = forwardRef(
       setDS(datasource);
     }, [datasource]);
 
-    const dsDigger = new JSONDigger(datasource, "id", "children");
+    const dsDigger = new JSONDigger(datasource, "id", "children", "isCollapsed");
 
     const clickChartHandler = (event) => {
       if (!event.target.closest(".oc-node")) {

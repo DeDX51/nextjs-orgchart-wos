@@ -38,7 +38,7 @@ const ChartNode = ({
   const [selected, setSelected] = useState(false);
 
   const nodeClass = [
-    "oc-node",
+    "oc-node wos-node",
     isChildrenCollapsed ? "isChildrenCollapsed" : "",
     allowedDrop ? "allowedDrop" : "",
     selected ? "selected" : "",
@@ -77,6 +77,12 @@ const ChartNode = ({
           setSelected(false);
         }
       });
+
+      if(datasource.isCollapsed) {
+        setIsChildrenCollapsed(true)
+      } else {
+        setIsChildrenCollapsed(false)
+      }
 
     return () => {
       subs1.unsubscribe();
@@ -267,13 +273,12 @@ const ChartNode = ({
           datasource.relationship &&
           datasource.relationship.charAt(0) === "1" && (
             <i
-              className={`oc-edge verticalEdge topEdge oci ${
-                topEdgeExpanded === undefined
-                  ? ""
-                  : topEdgeExpanded
+              className={`oc-edge verticalEdge topEdge oci ${topEdgeExpanded === undefined
+                ? ""
+                : topEdgeExpanded
                   ? "oci-chevron-down"
                   : "oci-chevron-up"
-              }`}
+                }`}
               onClick={topEdgeClickHandler}
             />
           )}
@@ -282,23 +287,21 @@ const ChartNode = ({
           datasource.relationship.charAt(1) === "1" && (
             <>
               <i
-                className={`oc-edge horizontalEdge rightEdge oci ${
-                  rightEdgeExpanded === undefined
-                    ? ""
-                    : rightEdgeExpanded
+                className={`oc-edge horizontalEdge rightEdge oci ${rightEdgeExpanded === undefined
+                  ? ""
+                  : rightEdgeExpanded
                     ? "oci-chevron-left"
                     : "oci-chevron-right"
-                }`}
+                  }`}
                 onClick={hEdgeClickHandler}
               />
               <i
-                className={`oc-edge horizontalEdge leftEdge oci ${
-                  leftEdgeExpanded === undefined
-                    ? ""
-                    : leftEdgeExpanded
+                className={`oc-edge horizontalEdge leftEdge oci ${leftEdgeExpanded === undefined
+                  ? ""
+                  : leftEdgeExpanded
                     ? "oci-chevron-right"
                     : "oci-chevron-left"
-                }`}
+                  }`}
                 onClick={hEdgeClickHandler}
               />
             </>
@@ -306,16 +309,24 @@ const ChartNode = ({
         {collapsible &&
           datasource.relationship &&
           datasource.relationship.charAt(2) === "1" && (
-            <i
-              className={`oc-edge verticalEdge bottomEdge oci ${
-                bottomEdgeExpanded === undefined
-                  ? ""
-                  : bottomEdgeExpanded
-                  ? "oci-chevron-up"
-                  : "oci-chevron-down"
-              }`}
+            <div
+              className={`oc-edge verticalEdge bottomEdge oci node-bottom-bar`}
               onClick={bottomEdgeClickHandler}
-            />
+            >
+              <span className="children-count">{datasource.children.length}</span>
+              <span className="expand-arrow">{bottomEdgeExpanded
+                  ? (
+                    <svg width="11" height="6" viewBox="0 0 11 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M9.5 1L5.5 5L1.5 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  )
+                  : (
+                      <svg width="11" height="6" viewBox="0 0 11 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9.5 1L5.5 5L1.5 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                  )
+              }</span>
+            </div>
           )}
       </div>
       {datasource.children && datasource.children.length > 0 && (

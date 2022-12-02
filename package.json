@@ -1,6 +1,6 @@
 {
   "name": "nextjs-orgchart",
-  "version": "1.0.8",
+  "version": "2.0.2",
   "main": "./dist/ChartContainer.js",
   "files": [
     "dist",
@@ -59,7 +59,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "publish:npm": "mkdir dist &&  babel src/components -d dist --copy-files"
+    "clean": "rimraf dist",
+    "publish:npm": "npm run clean && mkdir dist &&  babel src/components -d dist --copy-files"
   },
   "eslintConfig": {
     "extends": "react-app"
