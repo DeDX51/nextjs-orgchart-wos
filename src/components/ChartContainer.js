@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  forwardRef,
-  useImperativeHandle,
-} from "react";
+import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle } from "react";
 import PropTypes from "prop-types";
 import { selectNodeService } from "./service";
 import JSONDigger from "json-digger";
@@ -71,8 +65,7 @@ const ChartContainer = forwardRef(
     const [download, setDownload] = useState("");
 
     const attachRel = (data, flags) => {
-      data.relationship =
-        flags + (data.children && data.children.length > 0 ? 1 : 0);
+      data.relationship = flags + (data.children && data.children.length > 0 ? 1 : 0);
       if (data.children) {
         data.children.forEach(function (item) {
           attachRel(item, "1" + (data.children.length > 1 ? 1 : 0));
@@ -86,7 +79,7 @@ const ChartContainer = forwardRef(
       setDS(datasource);
     }, [datasource]);
 
-    const dsDigger = new JSONDigger(datasource, "id", "children", "isCollapsed");
+    const dsDigger = new JSONDigger(datasource, "id", "children", "isCollapsed", "country");
 
     const clickChartHandler = (event) => {
       if (!event.target.closest(".oc-node")) {
@@ -120,9 +113,7 @@ const ChartContainer = forwardRef(
         if (transform.indexOf("3d") === -1) {
           setTransform("matrix(1,0,0,1," + newX + "," + newY + ")");
         } else {
-          setTransform(
-            "matrix3d(1,0,0,0,0,1,0,0,0,0,1,0," + newX + ", " + newY + ",0,1)"
-          );
+          setTransform("matrix3d(1,0,0,0,0,1,0,0,0,0,1,0," + newX + ", " + newY + ",0,1)");
         }
       } else {
         let matrix = transform.split(",");
@@ -226,8 +217,7 @@ const ChartContainer = forwardRef(
       const isFf = !!window.sidebar;
       const isEdge =
         navigator.appName === "Microsoft Internet Explorer" ||
-        (navigator.appName === "Netscape" &&
-          navigator.appVersion.indexOf("Edge") > -1);
+        (navigator.appName === "Netscape" && navigator.appVersion.indexOf("Edge") > -1);
 
       if ((!isWebkit && !isFf) || isEdge) {
         window.navigator.msSaveBlob(canvas.msToBlob(), exportFilename + ".png");
@@ -285,15 +275,9 @@ const ChartContainer = forwardRef(
       },
       expandAllNodes: () => {
         chart.current
-          .querySelectorAll(
-            ".oc-node.hidden, .oc-hierarchy.hidden, .isSiblingsCollapsed, .isAncestorsCollapsed"
-          )
+          .querySelectorAll(".oc-node.hidden, .oc-hierarchy.hidden, .isSiblingsCollapsed, .isAncestorsCollapsed")
           .forEach((el) => {
-            el.classList.remove(
-              "hidden",
-              "isSiblingsCollapsed",
-              "isAncestorsCollapsed"
-            );
+            el.classList.remove("hidden", "isSiblingsCollapsed", "isAncestorsCollapsed");
           });
       },
     }));
@@ -325,12 +309,7 @@ const ChartContainer = forwardRef(
             />
           </ul>
         </div>
-        <a
-          className="oc-download-btn hidden"
-          ref={downloadButton}
-          href={dataURL}
-          download={download}
-        >
+        <a className="oc-download-btn hidden" ref={downloadButton} href={dataURL} download={download}>
           &nbsp;
         </a>
         <div className={`oc-mask ${exporting ? "" : "hidden"}`}>

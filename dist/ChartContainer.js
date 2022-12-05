@@ -115,7 +115,7 @@ var ChartContainer = /*#__PURE__*/(0, _react.forwardRef)(function (_ref, ref) {
   (0, _react.useEffect)(function () {
     setDS(datasource);
   }, [datasource]);
-  var dsDigger = new _jsonDigger.default(datasource, "id", "children", "isCollapsed");
+  var dsDigger = new _jsonDigger.default(datasource, "id", "children", "isCollapsed", "country");
   var clickChartHandler = function clickChartHandler(event) {
     if (!event.target.closest(".oc-node")) {
       if (onClickChart) {

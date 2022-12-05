@@ -77,7 +77,7 @@ var ChartNode = function ChartNode(_ref) {
     _useState14 = _slicedToArray(_useState13, 2),
     selected = _useState14[0],
     setSelected = _useState14[1];
-  var nodeClass = ["oc-node wos-node", isChildrenCollapsed ? "isChildrenCollapsed" : "", allowedDrop ? "allowedDrop" : "", selected ? "selected" : ""].filter(function (item) {
+  var nodeClass = ["oc-node wos-node", datasource.country ? "wos-country-node" : "", isChildrenCollapsed ? "isChildrenCollapsed" : "", allowedDrop ? "allowedDrop" : "", selected ? "selected" : ""].filter(function (item) {
     return item;
   }).join(" ");
   (0, _react.useEffect)(function () {
@@ -242,9 +242,9 @@ var ChartNode = function ChartNode(_ref) {
     onDragStart: dragstartHandler,
     onDragOver: dragoverHandler,
     onDragEnd: dragendHandler,
-    onDrop: dropHandler,
-    onMouseEnter: addArrows,
-    onMouseLeave: removeArrows
+    onDrop: dropHandler
+    // onMouseEnter={addArrows}
+    // onMouseLeave={removeArrows}
   }, NodeTemplate ? /*#__PURE__*/_react.default.createElement(NodeTemplate, {
     nodeData: datasource
   }) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
