@@ -10,6 +10,7 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 var _service = require("./service");
 var _jsonDigger = _interopRequireDefault(require("json-digger"));
 var _ChartNode = _interopRequireDefault(require("./ChartNode"));
+var _reactZoomPanPinch = require("react-zoom-pan-pinch");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -63,7 +64,8 @@ var ChartContainer = /*#__PURE__*/(0, _react.forwardRef)(function (_ref, ref) {
     collapsible = _ref.collapsible,
     multipleSelect = _ref.multipleSelect,
     onClickNode = _ref.onClickNode,
-    onClickChart = _ref.onClickChart;
+    onClickChart = _ref.onClickChart,
+    transformOptions = _ref.transformOptions;
   var container = (0, _react.useRef)();
   var chart = (0, _react.useRef)();
   var downloadButton = (0, _react.useRef)();
@@ -301,39 +303,80 @@ var ChartContainer = /*#__PURE__*/(0, _react.forwardRef)(function (_ref, ref) {
       }
     };
   });
-  return /*#__PURE__*/_react.default.createElement("div", {
-    ref: container,
-    className: "orgchart-container " + containerClass,
-    onWheel: zoom ? zoomHandler : undefined,
-    onMouseUp: pan && panning ? panEndHandler : undefined
-  }, /*#__PURE__*/_react.default.createElement("div", {
-    ref: chart,
-    className: "orgchart " + chartClass,
-    style: {
-      transform: transform,
-      cursor: cursor
-    },
-    onClick: clickChartHandler,
-    onMouseDown: pan ? panStartHandler : undefined,
-    onMouseMove: pan && panning ? panHandler : undefined
-  }, /*#__PURE__*/_react.default.createElement("ul", null, /*#__PURE__*/_react.default.createElement(_ChartNode.default, {
-    datasource: attachRel(ds, "00"),
-    NodeTemplate: NodeTemplate,
-    draggable: draggable,
-    collapsible: collapsible,
-    multipleSelect: multipleSelect,
-    changeHierarchy: changeHierarchy,
-    onClickNode: onClickNode
-  }))), /*#__PURE__*/_react.default.createElement("a", {
-    className: "oc-download-btn hidden",
-    ref: downloadButton,
-    href: dataURL,
-    download: download
-  }, "\xA0"), /*#__PURE__*/_react.default.createElement("div", {
-    className: "oc-mask ".concat(exporting ? "" : "hidden")
-  }, /*#__PURE__*/_react.default.createElement("i", {
-    className: "oci oci-spinner spinner"
-  })));
+  return /*#__PURE__*/_react.default.createElement(_reactZoomPanPinch.TransformWrapper, transformOptions, function (_ref2) {
+    var zoomIn = _ref2.zoomIn,
+      zoomOut = _ref2.zoomOut;
+    return /*#__PURE__*/_react.default.createElement("div", {
+      ref: container,
+      className: "orgchart-container " + containerClass
+      // onWheel={zoom ? zoomHandler : undefined}
+      // onMouseUp={pan && panning ? panEndHandler : undefined}
+    }, /*#__PURE__*/_react.default.createElement(_reactZoomPanPinch.TransformComponent, {
+      wrapperClass: "zoom-wrap",
+      contentClass: "zoom-content-wrap"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      ref: chart,
+      className: "orgchart " + chartClass,
+      style: {
+        transform: transform,
+        cursor: cursor
+      },
+      onClick: clickChartHandler
+      // onMouseDown={pan ? panStartHandler : undefined}
+      // onMouseMove={pan && panning ? panHandler : undefined}
+    }, /*#__PURE__*/_react.default.createElement("ul", null, /*#__PURE__*/_react.default.createElement(_ChartNode.default, {
+      datasource: attachRel(ds, "00"),
+      NodeTemplate: NodeTemplate,
+      draggable: draggable,
+      collapsible: collapsible,
+      multipleSelect: multipleSelect,
+      changeHierarchy: changeHierarchy,
+      onClickNode: onClickNode
+    })))), /*#__PURE__*/_react.default.createElement("a", {
+      className: "oc-download-btn hidden",
+      ref: downloadButton,
+      href: dataURL,
+      download: download
+    }, "\xA0"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "btnWrap"
+    }, /*#__PURE__*/_react.default.createElement("button", {
+      className: "zoomBtn",
+      onClick: function onClick() {
+        return zoomIn();
+      }
+    }, /*#__PURE__*/_react.default.createElement("svg", {
+      width: "14",
+      height: "14",
+      viewBox: "0 0 14 14",
+      fill: "none",
+      xmlns: "http://www.w3.org/2000/svg"
+    }, /*#__PURE__*/_react.default.createElement("path", {
+      d: "M6.6671 11.1115V6.6671M6.6671 6.6671V2.22266M6.6671 6.6671H11.1115M6.6671 6.6671H2.22266",
+      stroke: "black",
+      "stroke-width": "1.5",
+      "stroke-linecap": "round"
+    }))), /*#__PURE__*/_react.default.createElement("button", {
+      className: "zoomBtn",
+      onClick: function onClick() {
+        return zoomOut();
+      }
+    }, /*#__PURE__*/_react.default.createElement("svg", {
+      width: "14",
+      height: "14",
+      viewBox: "0 0 14 14",
+      fill: "none",
+      xmlns: "http://www.w3.org/2000/svg"
+    }, /*#__PURE__*/_react.default.createElement("path", {
+      d: "M11.1115 8H6.6671H2.22266",
+      stroke: "black",
+      "stroke-width": "1.5",
+      "stroke-linecap": "round"
+    })))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "oc-mask ".concat(exporting ? "" : "hidden")
+    }, /*#__PURE__*/_react.default.createElement("i", {
+      className: "oci oci-spinner spinner"
+    })));
+  });
 });
 ChartContainer.propTypes = propTypes;
 ChartContainer.defaultProps = defaultProps;

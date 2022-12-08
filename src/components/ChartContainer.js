@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { selectNodeService } from "./service";
 import JSONDigger from "json-digger";
 import ChartNode from "./ChartNode";
+import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 
 const propTypes = {
   datasource: PropTypes.object.isRequired,
@@ -48,6 +49,7 @@ const ChartContainer = forwardRef(
       multipleSelect,
       onClickNode,
       onClickChart,
+      transformOptions,
     },
     ref
   ) => {
@@ -283,39 +285,64 @@ const ChartContainer = forwardRef(
     }));
 
     return (
-      <div
-        ref={container}
-        className={"orgchart-container " + containerClass}
-        onWheel={zoom ? zoomHandler : undefined}
-        onMouseUp={pan && panning ? panEndHandler : undefined}
-      >
-        <div
-          ref={chart}
-          className={"orgchart " + chartClass}
-          style={{ transform: transform, cursor: cursor }}
-          onClick={clickChartHandler}
-          onMouseDown={pan ? panStartHandler : undefined}
-          onMouseMove={pan && panning ? panHandler : undefined}
-        >
-          <ul>
-            <ChartNode
-              datasource={attachRel(ds, "00")}
-              NodeTemplate={NodeTemplate}
-              draggable={draggable}
-              collapsible={collapsible}
-              multipleSelect={multipleSelect}
-              changeHierarchy={changeHierarchy}
-              onClickNode={onClickNode}
-            />
-          </ul>
-        </div>
-        <a className="oc-download-btn hidden" ref={downloadButton} href={dataURL} download={download}>
-          &nbsp;
-        </a>
-        <div className={`oc-mask ${exporting ? "" : "hidden"}`}>
-          <i className="oci oci-spinner spinner"></i>
-        </div>
-      </div>
+      <TransformWrapper {...transformOptions}>
+        {({ zoomIn, zoomOut }) => (
+          <div
+            ref={container}
+            className={"orgchart-container " + containerClass}
+            // onWheel={zoom ? zoomHandler : undefined}
+            // onMouseUp={pan && panning ? panEndHandler : undefined}
+          >
+            <TransformComponent wrapperClass="zoom-wrap" contentClass="zoom-content-wrap">
+              <div
+                ref={chart}
+                className={"orgchart " + chartClass}
+                style={{ transform: transform, cursor: cursor }}
+                onClick={clickChartHandler}
+                // onMouseDown={pan ? panStartHandler : undefined}
+                // onMouseMove={pan && panning ? panHandler : undefined}
+              >
+                <ul>
+                  <ChartNode
+                    datasource={attachRel(ds, "00")}
+                    NodeTemplate={NodeTemplate}
+                    draggable={draggable}
+                    collapsible={collapsible}
+                    multipleSelect={multipleSelect}
+                    changeHierarchy={changeHierarchy}
+                    onClickNode={onClickNode}
+                  />
+                </ul>
+              </div>
+            </TransformComponent>
+
+            <a className="oc-download-btn hidden" ref={downloadButton} href={dataURL} download={download}>
+              &nbsp;
+            </a>
+
+            <div className={"btnWrap"}>
+              <button className={"zoomBtn"} onClick={() => zoomIn()}>
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M6.6671 11.1115V6.6671M6.6671 6.6671V2.22266M6.6671 6.6671H11.1115M6.6671 6.6671H2.22266"
+                    stroke="black"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </button>
+              <button className={"zoomBtn"} onClick={() => zoomOut()}>
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11.1115 8H6.6671H2.22266" stroke="black" stroke-width="1.5" stroke-linecap="round" />
+                </svg>
+              </button>
+            </div>
+            <div className={`oc-mask ${exporting ? "" : "hidden"}`}>
+              <i className="oci oci-spinner spinner"></i>
+            </div>
+          </div>
+        )}
+      </TransformWrapper>
     );
   }
 );
