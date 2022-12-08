@@ -4,9 +4,9 @@ I've added extra code to match requirements and Replaced the native zoom and pan
 
 <h2>How to use:</h2>
 1. Clone this repository <br />
-2. Make required changes in `src/components/*` <br />
-3. Change version number in `package.json` <br />
-4. run `npm publish:npm` to build and pack a local node package for use in other projects.
+2. Make required changes in <code>src/components/*</code> <br />
+3. Change version number in <code>package.json</code> <br />
+4. run <code>npm publish:npm</code> to build and pack a local node package for use in other projects.
 
 <br />
 
