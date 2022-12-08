@@ -11,6 +11,6 @@ I've added extra code to match requirements and Replaced the native zoom and pan
 <br />
 
 <h2>Thanks to:</h2>
-- react-orgchart [<a href="https://www.npmjs.com/package/react-zoom-pan-pinch">npm</a>]
-- nextjs-orgchart [<a href="https://github.com/mahyarmadad/nextjs-orgchart">GitHub</a>]
-- React-Zoom-Pan-Pinch [<a href="https://www.npmjs.com/package/react-zoom-pan-pinch">npm</a>]
+- react-orgchart [<a href="https://www.npmjs.com/package/react-zoom-pan-pinch">npm</a>]<br />
+- nextjs-orgchart [<a href="https://github.com/mahyarmadad/nextjs-orgchart">GitHub</a>]<br />
+- React-Zoom-Pan-Pinch [<a href="https://www.npmjs.com/package/react-zoom-pan-pinch">npm</a>]<br />
